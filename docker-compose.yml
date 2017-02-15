@@ -8,6 +8,7 @@ services:
     restart: always
     volumes:
       - ./public:/code:rw
+      - /mnt/WEBSITE/dwc.local/Refview:/refview:rw
       - ./nginx/sites.conf:/etc/nginx/conf.d/site.conf
     links:
       - php
@@ -17,6 +18,7 @@ services:
     restart: always
     volumes:
       - ./public:/code
+      - /mnt/WEBSITE/dwc.local/Refview:/refview
     links:
       - database
 

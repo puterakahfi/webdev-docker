@@ -3,8 +3,9 @@
 
 $pdo = new PDO(
     'mysql:host=database;dbname=mysql',
-    'root',
+    'roots',
     'root');
 
+$status = $pdo->getAttribute(PDO::ATTR_CONNECTION_STATUS);
 
-var_dump($pdo);
+var_dump($status);
