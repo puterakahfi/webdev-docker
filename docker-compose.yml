@@ -1,11 +1,20 @@
-nginx:
-    image: tutum/nginx
+version: '2'
+
+services:
+  nginx:
+    build: ./nginx
     ports:
-        - "80:80"
-    links:
-        - phpfpm
+      - "8080:80"
+    restart: always
     volumes:
-        - ./nginx/default:/etc/nginx/sites-available/default
-        - ./nginx/default:/etc/nginx/sites-enabled/default
-        - ./logs/nginx-error.log:/var/log/nginx/error.log
-        - ./logs/nginx-access.log:/var/log/nginx/access.log
+      - ./public:/code:rw
+      - ./nginx/sites.conf:/etc/nginx/conf.d/site.conf
+    links:
+      - php
+
+  php:
+    build: ./php
+    restart: always
+    volumes:
+      - ./public:/code
+
