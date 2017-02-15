@@ -17,4 +17,13 @@ services:
     restart: always
     volumes:
       - ./public:/code
+    links:
+      - database
+
+  database:
+    build: ./mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
 
