@@ -6,9 +6,9 @@ services:
     ports:
       - "8080:80"
     restart: always
+    volumes_from:
+      - workspace
     volumes:
-      - ./public:/code:rw
-      - /mnt/WEBSITE/dwc.local/Refview:/refview:rw
       - ./nginx/sites.conf:/etc/nginx/conf.d/site.conf
     links:
       - php
@@ -16,9 +16,8 @@ services:
   php:
     build: ./php
     restart: always
-    volumes:
-      - ./public:/code
-      - /mnt/WEBSITE/dwc.local/Refview:/refview
+    volumes_from:
+      - workspace
     links:
       - database
 
@@ -28,4 +27,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
 
+  workspace:
+    build: ./workspace
+    volumes:
+      - /mnt/WEBSITE/dwc.local/Refview:/refview:rw
 
