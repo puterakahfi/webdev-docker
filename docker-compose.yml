@@ -11,17 +11,17 @@ services:
     volumes:
       - ./nginx/sites.conf:/etc/nginx/conf.d/site.conf
     links:
-      - php
+      - php-fpm
 
-  php:
-    build: ./php
+  php-fpm:
+    build: ./php-fpm
     restart: always
     volumes_from:
       - workspace
     links:
-      - database
+      - mariadb 
 
-  database:
+  mariadb:
     build: ./mariadb
     restart: always
     environment:
@@ -37,3 +37,9 @@ services:
     volumes:
       - /mnt/WEBSITE/dwc.local/Refview:/refview:rw
 
+  lemp:
+    image: tianon/true
+    depends_on:
+       - php-fpm
+       - nginx
+       - mariadb 
