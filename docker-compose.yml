@@ -26,6 +26,8 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./data/maria:/var/lib/mysql:rw
 
   workspace:
     build: ./workspace
