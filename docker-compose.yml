@@ -30,7 +30,10 @@ services:
       - ./data/maria:/var/lib/mysql:rw
 
   workspace:
-    build: ./workspace
+    build:
+      context: ./workspace
+      args:
+        - INSTALL_YARN=true
     volumes:
       - /mnt/WEBSITE/dwc.local/Refview:/refview:rw
 

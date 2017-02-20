@@ -44,6 +44,17 @@ RUN apt-get update && \
         nodejs \
     && apt-get clean
 
+#yarn 
+ARG INSTALL_YARN=false
+ENV INSTALL_YARN ${INSTALL_YARN}
+ARG YARN_VERSION=latest
+ENV YARN_VERSION ${YARN_VERSION}
+RUN if [ ${INSTALL_YARN} = true ]; then \
+    curl -o- -L https://yarnpkg.com/install.sh | bash; \ 
+    echo 'export PATH="$HOME/.yarn/bin:$PATH"' >> ~/.bashrc \
+;fi
+
+
 # Install composer and add its bin to the PATH.
 RUN curl -s http://getcomposer.org/installer | php && \
     echo "export PATH=${PATH}:/var/www/vendor/bin" >> ~/.bashrc && \
