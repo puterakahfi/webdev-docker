@@ -9,6 +9,7 @@ services:
     volumes_from:
       - workspace
     volumes:
+      - ./logs/nginx:/var/log/nginx/
       - ./nginx/sites.conf:/etc/nginx/conf.d/site.conf
     links:
       - php-fpm
@@ -37,9 +38,3 @@ services:
     volumes:
       - /mnt/WEBSITE/dwc.local/Refview:/refview:rw
 
-  lemp:
-    image: tianon/true
-    depends_on:
-       - php-fpm
-       - nginx
-       - mariadb 
