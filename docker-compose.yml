@@ -35,6 +35,9 @@ services:
       context: ./workspace
       args:
         - INSTALL_YARN=true
+        - INSTALL_ZSH=false  
+        - INSTALL_COMPOSER=true
     volumes:
       - /mnt/WEBSITE/dwc.local/Refview:/refview:rw
-
+      - /mnt/WEBSITE/:/var/www:rw  
+      - ./data/ssh/:/root/.ssh:rw  
