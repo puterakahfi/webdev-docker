@@ -1,0 +1,44 @@
+version: '2'
+
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    restart: always
+    volumes_from:
+      - workspace
+    volumes:
+      - ./logs/nginx:/var/log/nginx/
+      - ./nginx/sites.conf:/etc/nginx/conf.d/site.conf
+    links:
+      - php-fpm
+
+  php-fpm:
+    build: ./php-fpm
+    container_name: php-fpm7
+    restart: always
+    volumes_from:
+      - workspace
+    links:
+      - mariadb 
+
+  mariadb:
+    build: ./mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./data/maria:/var/lib/mysql:rw
+  lemp:
+    image: tianon/true
+
+  workspace:
+    build:
+      context: ./workspace
+      args:
+        - INSTALL_YARN=true
+        - INSTALL_ZSH=false  
+        - INSTALL_COMPOSER=true
+    volumes:
+      - /mnt/WEBSITE/:/var/www/:rw  
