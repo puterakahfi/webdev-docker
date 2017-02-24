@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerName php-apache.local
+
+        DocumentRoot /var/www
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Order allow,deny
+                allow from all
+                Require all granted
+        </Directory>
+</VirtualHost>
