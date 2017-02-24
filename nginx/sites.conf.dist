@@ -1,14 +1,14 @@
 server {
     index index.php   index.html;
-    server_name php-docker.local;
+    server_name php7-docker.local;
     error_log  /var/log/nginx/error.log;
     access_log /var/log/nginx/access.log;
-    root /code;
+    root /var/www;
 
     location ~ \.php$ {
         try_files $uri =404;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass php-fpm7:9000;
+        fastcgi_pass php7-fpm:9000;
         fastcgi_index index.php;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
@@ -17,6 +17,26 @@ server {
 
 }
 
+
+
+server {
+    index index.php   index.html;
+    server_name php7-docker.local;
+    error_log  /var/log/nginx/error.log;
+    access_log /var/log/nginx/access.log;
+    root /var/www;
+
+    location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass php5-fpm:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+    }
+
+}
 
 server {
     server_name refview.local;
@@ -32,7 +52,7 @@ server {
     # This rule should only be placed on your development environment
     # In production, don't include this and don't deploy app_dev.php or config.php
     location ~ ^/(app_dev|config)\.php(/|$) {
-        fastcgi_pass php-fpm7:9000;
+        fastcgi_pass php7-fpm:9000;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
         # When you are using symlinks to link the document root to the
@@ -47,7 +67,7 @@ server {
     }
     # PROD
     location ~ ^/app\.php(/|$) {
-        fastcgi_pass php-fpm7:9000;
+        fastcgi_pass php7-fpm:9000;
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
         # When you are using symlinks to link the document root to the
