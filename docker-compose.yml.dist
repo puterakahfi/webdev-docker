@@ -32,7 +32,8 @@ services:
       - ./data/maria:/var/lib/mysql:rw
   lemp:
     image: tianon/true
-
+  teamcity:
+    image: jetbrains/teamcity-server
   workspace:
     build:
       context: ./workspace
